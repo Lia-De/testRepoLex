@@ -1,2 +1,4 @@
 Mer filtext hej!
 Redigera från browser
+
+Den här texten är från secondary branch.
