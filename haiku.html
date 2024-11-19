@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haiku Generator</title>
+</head>
+<body>
+    <h1>Haiku Generator</h1>
+    <p>Press the button to generate a haiku:</p>
+    <button onclick="generateHaiku()">Generate Haiku</button>
+    <p id="haiku"></p>
+
+    <script>
+        const fiveSyllablePhrases = [
+            "Threads dance on the loom",
+            "Shuttle flies so swift",
+            "Weaving dreams in yarn",
+            "Patterns interlace",
+            "Crafting tales in cloth",
+            "Tapestry of time",
+            "Woolen threads entwine",
+            "Colors blend in weave",
+            "Textures tell stories",
+            "Fabric grows in hands",
+            "Warp and weft unite",
+            "Loom hums in delight",
+            "Spindles spin in joy",
+            "Weavers craft with heart",
+            "Yarn sings through fingers",
+            "Cloth whispers secrets",
+            "Echoes of the past",
+            "Threads connect the world",
+            "Art in every thread",
+            "Textiles full of life"
+        ];
+
+        const sevenSyllablePhrases = [
+            "Under fingers, fabric blooms",
+            "History in threads we weave",
+            "Patterns old and new unite",
+            "Weaving wisdom from the past",
+            "Every thread a story tells",
+            "Colors woven into dreams",
+            "Creating magic with threads",
+            "Ancient craft in modern hands",
+            "Loom sings a song of art",
+            "Textures woven, tales unfold"
+        ];
+
+        function getRandomElement(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+       function generateHaiku() {
+		let line1 = getRandomElement(fiveSyllablePhrases);
+		let line3;
+		do {
+			line3 = getRandomElement(fiveSyllablePhrases);
+		} while (line1 === line3);
+    
+		const line2 = getRandomElement(sevenSyllablePhrases);
+		document.getElementById("haiku").innerText = `${line1}\n${line2}\n${line3}`;
+}
+
+    </script>
+	
+	<h1>Selzer Water Name Generator</h1> <button onclick="generateName()">Generate Name</button> <p id="name"></p> <script> const adjectives = [ "Rickety", "Majestic", "Sturdy", "Gothic", "Baroque", "Modern", "Ancient", "Imposing", "Delicate", "Elegant" ]; const flavours = [ "Blueberry", "Cherry", "Lemon", "Ginger", "Vanilla", "Apple", "Mango", "Peach", "Mint", "Cinnamon" ]; 
+	function getRandomElement(array) { return array[Math.floor(Math.random() * array.length)]; } function generateName() {
+    const adjective = getRandomElement(adjectives);
+    let flavour1 = getRandomElement(flavours);
+    let flavour2;
+    do {
+        flavour2 = getRandomElement(flavours);
+    } while (flavour1 === flavour2);
+    document.getElementById("name").innerText = `${adjective} ${flavour1} ${flavour2}`;
+}
+ </script>
+	
+</body>
+</html>
