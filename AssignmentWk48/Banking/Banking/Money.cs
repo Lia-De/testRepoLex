@@ -5,10 +5,7 @@
         public decimal Amount { get; set; }
         public Currency Currency { get; private set; }
 
-        public string ToString()
-        {
-            return Amount + " " + Currency;
-        }
+        public string ToString() { return Amount + " " + Currency;  }
         public Money(decimal amount, Currency currency)
         {
             Amount = amount;
