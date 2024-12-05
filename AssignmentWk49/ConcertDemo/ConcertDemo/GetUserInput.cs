@@ -17,7 +17,7 @@ public class GetUserInput
                 actualNumber = int.Parse(userInput);
                 wrongContent = false;
             }
-            catch (FormatException e)
+            catch (FormatException)
             {
                 //Console.WriteLine(e.Message);
                 Console.WriteLine("! You must enter a number.");
@@ -75,7 +75,7 @@ public class GetUserInput
             {
                 Console.WriteLine(e.Message);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 Console.Write("! Not a venue. Try again: ");
             }

@@ -1,4 +1,5 @@
 ﻿using ConcertDemo;
+using System.Collections.Concurrent;
 
 UseBookingAgent();
 void UseBookingAgent ()
@@ -15,13 +16,12 @@ void UseBookingAgent ()
     // Write these concerts to file for funsies.
     jennysBokare.WritePersistantList();
     // jennysBokare.AllConcerts();
-    Console.WriteLine("Saved to file. Now delete all events from runtime, and read from the file" );
+    Console.WriteLine("Saved to file. Now delete all but one events from runtime, and read from the file" );
     jennysBokare.DeleteConcert(1);
     jennysBokare.DeleteConcert(2);
     jennysBokare.DeleteConcert(3);
     jennysBokare.DeleteConcert(4);
     jennysBokare.DeleteConcert(5);
-    jennysBokare.DeleteConcert(6);
 
 
 
@@ -106,7 +106,26 @@ void UseBookingAgent ()
                     else if (fieldToEdit == 2)
                     {
                         // changing date
-                        Console.WriteLine("  ! Currently not implemented");
+                        int editYear, editMonth, editDay, editHour;
+                        Console.WriteLine("   >> Date format: YYYY, MM, DD, HH ");
+                        Console.Write("   >> YEAR (4 digits): ");
+                        editYear = GetUserInput.GetNumber();
+                        Console.Write("   >> Month (2 digits): ");
+                        editMonth = GetUserInput.GetNumber();
+                        Console.Write("   >> Day (2 digits): ");
+                        editDay = GetUserInput.GetNumber();
+                        Console.Write("   >> Hour (2 digits): ");
+                        editHour = GetUserInput.GetNumber();
+                        try
+                        {
+                            jennysBokare.EditConcert(editID, new DateTime(editYear, editMonth, editDay, editHour, 0, 0));
+                        } catch (ArgumentOutOfRangeException)
+                        {
+                            Console.WriteLine("! Date out of range");
+
+                        }
+                        Console.WriteLine("   >> Date changed.");
+
                     }
                     else if (fieldToEdit == 3)
                     {
@@ -132,10 +151,12 @@ void UseBookingAgent ()
                 string inputArtist = "";
                 // inputArtist = Console.ReadLine();
                 inputArtist = GetUserInput.GetArtistName();
+
                 Console.WriteLine("  Venue options are: ");
                 GetUserInput.PrintVenues();
                 Console.Write("   >> Choose Venue: ");
                 Venues venue = GetUserInput.GetVenueFromString();
+
                 int inputYear, inputMonth, inputDay, inputHour;
                 Console.WriteLine("   >> Date format: YYYY, MM, DD, HH ");
                 Console.Write("   >> YEAR (4 digits): ");
@@ -147,16 +168,17 @@ void UseBookingAgent ()
                 Console.Write("   >> Hour (2 digits): ");
                 inputHour = GetUserInput.GetNumber();
 
+
                 try
                 {
                     Gig newGig = jennysBokare.BookConcert(inputArtist, venue, new DateTime(inputYear, inputMonth, inputDay, inputHour, 0, 0));
                     newGig.ShowInfo();
                     Console.WriteLine("   >> New Concert Booked.");
-                }
-                catch (NullReferenceException)
+                } catch (ArgumentOutOfRangeException)
                 {
-                    Console.WriteLine(" broken ");
+                    Console.WriteLine("! Date out of range.");
                 }
+               
                 break;
             case 9:
                 jennysBokare.AllConcerts();
