@@ -1,9 +1,6 @@
 ﻿using ConcertDemo;
-using System.Collections.Concurrent;
 
  UseBookingAgent();
-
-
 void UseBookingAgent ()
 {
     BookingAgent jennysBokare = new BookingAgent();
@@ -17,16 +14,15 @@ void UseBookingAgent ()
 
     // Write these concerts to file for funsies.
     jennysBokare.WritePersistantList();
-    // jennysBokare.AllConcerts();
-    Console.WriteLine("Saved to file. Now delete all but one events from runtime, and read from the file" );
+    
+    // Saved to file. Now delete all but one events from runtime, and read from the file,
     jennysBokare.DeleteConcert(1);
     jennysBokare.DeleteConcert(2);
     jennysBokare.DeleteConcert(3);
     jennysBokare.DeleteConcert(4);
     jennysBokare.DeleteConcert(5);
 
-
-
+    // Print out the list restored from file, to show it's done.
     List<Gig> restoredGigs = new List<Gig>();
     restoredGigs = jennysBokare.RestoreList();
     foreach (Gig g in restoredGigs)
@@ -34,7 +30,7 @@ void UseBookingAgent ()
         g.ShowInfo();
     }
 
-    Console.WriteLine("Welcome to Jennys Booking Agent. We currently have < " + jennysBokare.ConcertList.Count() + " > Concerts on the books.");
+    Console.WriteLine("\n   Welcome to Jenny's Booking Agent. We currently have < " + jennysBokare.ConcertList.Count() + " > Concerts on the books.");
     Console.WriteLine(GetUserInput.ShowMenu);
 
     int menuOption = GetUserInput.GetNumber();
@@ -67,7 +63,7 @@ void UseBookingAgent ()
                         jennysBokare.BookSeats(bookingID, seatsToBook);
 
                 }
-                catch (NullReferenceException e)
+                catch (NullReferenceException)
                 {
                     Console.WriteLine("! That is not a valid Concert");
                 }
@@ -115,7 +111,6 @@ void UseBookingAgent ()
                         } catch (ArgumentOutOfRangeException)
                         {
                             Console.WriteLine("! Date out of range");
-
                         }
                         Console.WriteLine("   >> Date changed.");
 

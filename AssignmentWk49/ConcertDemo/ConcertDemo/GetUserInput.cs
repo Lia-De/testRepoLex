@@ -132,7 +132,6 @@ public class GetUserInput
                 }
                 catch (FormatException)
                 {
-                    //Console.WriteLine(e.Message);
                     Console.WriteLine("! You must enter a number.");
                 }
                 catch (OverflowException e)
@@ -156,7 +155,6 @@ public class GetUserInput
                 }
                 catch (FormatException)
                 {
-                    //Console.WriteLine(e.Message);
                     Console.WriteLine("! You must enter a number.");
                 }
                 catch (OverflowException e)
@@ -180,7 +178,6 @@ public class GetUserInput
                 }
                 catch (FormatException)
                 {
-                    //Console.WriteLine(e.Message);
                     Console.WriteLine("! You must enter a number.");
                 }
                 catch (OverflowException e)
