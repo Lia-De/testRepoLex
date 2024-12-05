@@ -1,4 +1,6 @@
-﻿namespace ConcertDemo;
+﻿using System.ComponentModel.Design;
+
+namespace ConcertDemo;
 
 public class GetUserInput
 {
@@ -83,6 +85,115 @@ public class GetUserInput
         return newVenue;
     }
 
+    public static DateTime GetDate()
+    {
+        DateTime newDate= DateTime.Now;
+        int actualNumber=0;
+        string userInput = "";
+        int year = 0;
+        int month = 0;
+        int day = 0;
+        int hour = 0;
+        bool wrongContent = true;
+        Console.Write("   >> YEAR (4 digits): ");
+
+        while (wrongContent)
+        {
+            userInput = Console.ReadLine();
+            if (userInput.Length == 4)
+            {
+                try
+                {
+                    actualNumber = int.Parse(userInput);
+                    wrongContent = false;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("! You must enter a number.");
+                }
+                catch (OverflowException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            } else Console.Write("Enter a 4 digit Year: ");
+        }
+        year = actualNumber;
+        wrongContent = true;
+        Console.Write("   >> Month (2 digits): ");
+        while (wrongContent)
+        {
+            userInput = Console.ReadLine();
+            if (userInput.Length == 2)
+            {
+                try
+                {
+                    actualNumber = int.Parse(userInput);
+                    wrongContent = false;
+                }
+                catch (FormatException)
+                {
+                    //Console.WriteLine(e.Message);
+                    Console.WriteLine("! You must enter a number.");
+                }
+                catch (OverflowException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            } else Console.Write("Enter a 2 digit month: "); 
+        }
+        month = actualNumber;
+        wrongContent = true;
+        Console.Write("   >> Day (2 digits): ");
+        while (wrongContent)
+        {
+            userInput = Console.ReadLine();
+            if (userInput.Length == 2)
+            {
+                try
+                {
+                    actualNumber = int.Parse(userInput);
+                    wrongContent = false;
+                }
+                catch (FormatException)
+                {
+                    //Console.WriteLine(e.Message);
+                    Console.WriteLine("! You must enter a number.");
+                }
+                catch (OverflowException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            } else Console.Write("! Enter a 2 digit day: "); 
+        }
+        day = actualNumber;
+        wrongContent = true;
+        Console.Write("   >> Hour (2 digits): ");
+        while (wrongContent)
+        {
+            userInput = Console.ReadLine();
+            if (userInput.Length == 2)
+            {
+                try
+                {
+                    actualNumber = int.Parse(userInput);
+                    wrongContent = false;
+                }
+                catch (FormatException)
+                {
+                    //Console.WriteLine(e.Message);
+                    Console.WriteLine("! You must enter a number.");
+                }
+                catch (OverflowException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }  else Console.Write("Enter a 2 digit hour: ");
+            hour = actualNumber;
+        }
+        newDate = new DateTime(year, month, day, hour, 0, 0); 
+
+        return newDate;
+    }
     public static void PrintVenues()
     {
         foreach (Venues v in Enum.GetValues(typeof(Venues)))

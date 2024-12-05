@@ -1,7 +1,9 @@
 ﻿using ConcertDemo;
 using System.Collections.Concurrent;
 
-UseBookingAgent();
+ UseBookingAgent();
+
+
 void UseBookingAgent ()
 {
     BookingAgent jennysBokare = new BookingAgent();
@@ -106,19 +108,10 @@ void UseBookingAgent ()
                     else if (fieldToEdit == 2)
                     {
                         // changing date
-                        int editYear, editMonth, editDay, editHour;
-                        Console.WriteLine("   >> Date format: YYYY, MM, DD, HH ");
-                        Console.Write("   >> YEAR (4 digits): ");
-                        editYear = GetUserInput.GetNumber();
-                        Console.Write("   >> Month (2 digits): ");
-                        editMonth = GetUserInput.GetNumber();
-                        Console.Write("   >> Day (2 digits): ");
-                        editDay = GetUserInput.GetNumber();
-                        Console.Write("   >> Hour (2 digits): ");
-                        editHour = GetUserInput.GetNumber();
+                        DateTime newDate = GetUserInput.GetDate();
                         try
                         {
-                            jennysBokare.EditConcert(editID, new DateTime(editYear, editMonth, editDay, editHour, 0, 0));
+                            jennysBokare.EditConcert(editID, newDate);
                         } catch (ArgumentOutOfRangeException)
                         {
                             Console.WriteLine("! Date out of range");
@@ -156,22 +149,12 @@ void UseBookingAgent ()
                 GetUserInput.PrintVenues();
                 Console.Write("   >> Choose Venue: ");
                 Venues venue = GetUserInput.GetVenueFromString();
-
-                int inputYear, inputMonth, inputDay, inputHour;
-                Console.WriteLine("   >> Date format: YYYY, MM, DD, HH ");
-                Console.Write("   >> YEAR (4 digits): ");
-                inputYear = GetUserInput.GetNumber();
-                Console.Write("   >> Month (2 digits): ");
-                inputMonth = GetUserInput.GetNumber();
-                Console.Write("   >> Day (2 digits): ");
-                inputDay = GetUserInput.GetNumber();
-                Console.Write("   >> Hour (2 digits): ");
-                inputHour = GetUserInput.GetNumber();
-
-
+                
+                DateTime gigDate = GetUserInput.GetDate();
+                
                 try
                 {
-                    Gig newGig = jennysBokare.BookConcert(inputArtist, venue, new DateTime(inputYear, inputMonth, inputDay, inputHour, 0, 0));
+                    Gig newGig = jennysBokare.BookConcert(inputArtist, venue, gigDate);
                     newGig.ShowInfo();
                     Console.WriteLine("   >> New Concert Booked.");
                 } catch (ArgumentOutOfRangeException)
