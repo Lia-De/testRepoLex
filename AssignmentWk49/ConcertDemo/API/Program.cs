@@ -44,7 +44,7 @@ app.MapGet("/optional/{input}", (string input) =>
 app.MapGet("/", () => {
     return $"Try /guess/x where x is a number between 1 and 100\n" +
             "Or try /collection \n" + 
-            "" ;
+            "Or try /optional/{your string here}" ;
 });
 
 app.Run();
