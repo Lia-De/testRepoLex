@@ -135,7 +135,7 @@ namespace ConcertDemo
             }
         }
 
-        public List<Gig> RestoreList()
+        public static List<Gig> RestoreList()
         {
             List<Gig> restoredList = new List<Gig>();
 

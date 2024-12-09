@@ -24,7 +24,7 @@ void UseBookingAgent ()
 
     // Print out the list restored from file, to show it's done.
     List<Gig> restoredGigs = new List<Gig>();
-    restoredGigs = jennysBokare.RestoreList();
+    restoredGigs = BookingAgent.RestoreList();
     foreach (Gig g in restoredGigs)
     {
         g.ShowInfo();
