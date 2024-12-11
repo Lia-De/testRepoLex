@@ -5,7 +5,14 @@ namespace ConcertDemo;
 public class GetUserInput
 {
     public static string ShowMenu = ">> Options 1 = Book seats | 2 = Delete Concert | 3 = Edit Concert | 4 = Add Concert | 0 = Exit  |  9 = List all";
-
+    public static void AllConcerts(BookingAgent myBooker)
+    {
+        if (myBooker.ConcertList.Count == 0) Console.WriteLine("    >> There are no Concerts on the books right now.");
+        foreach (Gig g in myBooker.ConcertList)
+        {
+            g.ShowInfo();
+        }
+    }
     public static int GetNumber()
     {
         string userInput = "";
@@ -21,14 +28,82 @@ public class GetUserInput
             }
             catch (FormatException)
             {
-                //Console.WriteLine(e.Message);
-                Console.WriteLine("! You must enter a number.");
+                Console.WriteLine("! You must enter a number: ");
             }
             catch (OverflowException e)
             {
                 Console.WriteLine(e.Message);
             }
         }
+        return actualNumber;
+    }
+    public static int GetNumber(int minValue, int maxValue)
+    {
+        string userInput = "";
+        int actualNumber = -1;
+        bool wrongContent = true;
+        while (wrongContent)
+        {
+            userInput = Console.ReadLine();
+            try
+            {
+                actualNumber = int.Parse(userInput);
+                if (actualNumber < minValue || actualNumber > maxValue)
+                {
+                    Console.Write($"! The number must be between {minValue} and {maxValue}: ");
+                }
+                else
+                {
+                    wrongContent = false;
+                }
+            }
+            catch (FormatException)
+            {
+                //Console.WriteLine(e.Message);
+                Console.Write("! You must enter a number: ");
+            }
+            catch (OverflowException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        return actualNumber;
+    }
+    public static int GetNumber(int digits, int minValue, int maxValue)
+    {
+        int actualNumber = 0;
+        string userInput = "";
+        bool wrongContent = true;
+
+        while (wrongContent)
+        {
+            userInput = Console.ReadLine();
+            if (userInput.Length == digits)
+            {
+                try
+                {
+                    actualNumber = int.Parse(userInput);
+                    if (actualNumber < minValue || actualNumber > maxValue)
+                    {
+                        Console.WriteLine($"! The number must be between {minValue} and {maxValue}.");
+                    }
+                    else
+                    {
+                        wrongContent = false;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("! You must enter a number.");
+                }
+                catch (OverflowException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            else Console.Write($"! Enter {digits} digits: ");
+        }
+
         return actualNumber;
     }
 
@@ -79,7 +154,7 @@ public class GetUserInput
             }
             catch (ArgumentException)
             {
-                Console.Write("! Not a venue. Try again: ");
+                Console.Write("! Not a recognized venue. Try again: ");
             }
         }
         return newVenue;
@@ -88,105 +163,24 @@ public class GetUserInput
     public static DateTime GetDate()
     {
         DateTime newDate= DateTime.Now;
-        int actualNumber=0;
         string userInput = "";
         int year = 0;
         int month = 0;
         int day = 0;
         int hour = 0;
-        bool wrongContent = true;
-        Console.Write("   >> YEAR (4 digits): ");
 
-        while (wrongContent)
-        {
-            userInput = Console.ReadLine();
-            if (userInput.Length == 4)
-            {
-                try
-                {
-                    actualNumber = int.Parse(userInput);
-                    wrongContent = false;
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("! You must enter a number.");
-                }
-                catch (OverflowException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            } else Console.Write("Enter a 4 digit Year: ");
-        }
-        year = actualNumber;
-        wrongContent = true;
+        Console.Write("   >> YEAR (4 digits): ");
+        year = GetNumber(4, DateTime.Now.Year,(DateTime.Now.Year+10));
+        
         Console.Write("   >> Month (2 digits): ");
-        while (wrongContent)
-        {
-            userInput = Console.ReadLine();
-            if (userInput.Length == 2)
-            {
-                try
-                {
-                    actualNumber = int.Parse(userInput);
-                    wrongContent = false;
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("! You must enter a number.");
-                }
-                catch (OverflowException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            } else Console.Write("Enter a 2 digit month: "); 
-        }
-        month = actualNumber;
-        wrongContent = true;
+        month = GetNumber(2, 0, 12);
+        
         Console.Write("   >> Day (2 digits): ");
-        while (wrongContent)
-        {
-            userInput = Console.ReadLine();
-            if (userInput.Length == 2)
-            {
-                try
-                {
-                    actualNumber = int.Parse(userInput);
-                    wrongContent = false;
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("! You must enter a number.");
-                }
-                catch (OverflowException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            } else Console.Write("! Enter a 2 digit day: "); 
-        }
-        day = actualNumber;
-        wrongContent = true;
+        day = GetNumber(2, 0, 31);
+        
         Console.Write("   >> Hour (2 digits): ");
-        while (wrongContent)
-        {
-            userInput = Console.ReadLine();
-            if (userInput.Length == 2)
-            {
-                try
-                {
-                    actualNumber = int.Parse(userInput);
-                    wrongContent = false;
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("! You must enter a number.");
-                }
-                catch (OverflowException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }  else Console.Write("Enter a 2 digit hour: ");
-            hour = actualNumber;
-        }
+        hour = GetNumber(2, 0, 23);
+
         newDate = new DateTime(year, month, day, hour, 0, 0); 
 
         return newDate;
@@ -197,6 +191,13 @@ public class GetUserInput
         {
             Console.WriteLine("  "+v);
         }
+    }
+
+    public static string PrintableConcertIDs(List<int> concertIDs)
+    {
+        string printIDs = "";
+        foreach (int concertID in concertIDs) printIDs += " " + concertID + " |";
+        return printIDs.Trim('|');
     }
 
     public static void HandleUserInput(BookingAgent jennysBokare)
@@ -210,7 +211,7 @@ public class GetUserInput
                 case 1:
                     // book seats
                     Console.WriteLine("\n   >> BOOK Step 1: Type in the id of the Concert you want to book seats for: ");
-                    Console.WriteLine("   >> Valid IDs: " + jennysBokare.ValidGigIDs());
+                    Console.WriteLine($"   >> Valid IDs: {GetUserInput.PrintableConcertIDs(jennysBokare.ValidGigIDs())}");
                     Console.Write("   >> Concert ID: ");
                     int bookingID = GetUserInput.GetNumber();
                     Gig gigToBook;
@@ -222,13 +223,15 @@ public class GetUserInput
                         gigToBook.ShowInfo();
                         Console.WriteLine("   >> BOOK Step 2. There are a total of " + cap + " seats, and currently " + booked + " booked.");
                         Console.Write("   >> Number of seats you want to book: ");
-                        int seatsToBook = GetUserInput.GetNumber();
-                        if (seatsToBook <= 0)
+                        int seatsToBook = GetUserInput.GetNumber(1,(cap-booked));
+                        Console.WriteLine("       >> Trying to book seats for " + seatsToBook + " people. ");
+                        if (jennysBokare.BookSeats(bookingID, seatsToBook) > 0 )
                         {
-                            Console.WriteLine("! You must enter a number of seats bigger than 0. ");
-                            break;
+                            Console.WriteLine("      >> Success! ");
+                        } else
+                        {
+                            Console.WriteLine("      >> Booking failed");
                         }
-                        jennysBokare.BookSeats(bookingID, seatsToBook);
 
                     }
                     catch (NullReferenceException)
@@ -239,7 +242,7 @@ public class GetUserInput
                 case 2:
                     // delete
                     Console.WriteLine("\n   >> DELETE. Type in the id of the Concert to delete. ");
-                    Console.WriteLine("   >> Valid IDs: " + jennysBokare.ValidGigIDs());
+                    Console.WriteLine($"   >> Valid IDs: {GetUserInput.PrintableConcertIDs(jennysBokare.ValidGigIDs())}");
                     Console.Write("   >> Concert ID: ");
                     int deleteID = GetUserInput.GetNumber();
                     if (jennysBokare.DeleteConcert(deleteID)) Console.WriteLine("Deleted concert with ID: " + deleteID);
@@ -248,7 +251,7 @@ public class GetUserInput
                 case 3:
                     // Edit 
                     Console.WriteLine("\n   >> EDIT Step 1. Type in the id of the concert to edit and press enter.");
-                    Console.WriteLine("   >> Valid IDs: " + jennysBokare.ValidGigIDs());
+                    Console.WriteLine($"   >> Valid IDs: {GetUserInput.PrintableConcertIDs(jennysBokare.ValidGigIDs())}");
                     Console.Write("   >> Concert ID: ");
                     int editID = GetUserInput.GetNumber();
                     Gig gigToEdit;
@@ -331,7 +334,7 @@ public class GetUserInput
 
                     break;
                 case 9:
-                    jennysBokare.AllConcerts();
+                    GetUserInput.AllConcerts(jennysBokare);
                     break;
                 default:
                     Console.WriteLine("! Not an option");

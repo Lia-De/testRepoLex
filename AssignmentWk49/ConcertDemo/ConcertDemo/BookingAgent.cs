@@ -30,13 +30,7 @@ namespace ConcertDemo
                 NumberOfGigs = highestID;
             } else { NumberOfGigs = 0; }
         }
-        public void AllConcerts()
-        {
-            if (ConcertList.Count == 0) Console.WriteLine("    >> There are no Concerts on the books right now.");
-            foreach (Gig g in ConcertList) {
-                g.ShowInfo();
-            }
-        }
+
         public Gig BookConcert(string artist, Venues venue, DateTime date)
         {
             ++NumberOfGigs;
@@ -65,24 +59,19 @@ namespace ConcertDemo
             {
                 gigToBook = FindListItem(gigID);
 
-                Console.Write("       >> Trying to book seats for "+seatsWanted + " people. ");
                 if (seatsWanted <= (gigToBook.Capacity - gigToBook.Bookings))
                 {
                     gigToBook.Bookings += seatsWanted;
-                    Console.WriteLine("Success! ");
+                    
                     WritePersistantList();
                     return gigToBook.Bookings;
-                }
-                else if (seatsWanted<=0)
-                {
-                    Console.WriteLine("! You must enter a number greater than 0 to book any seats.");
                 }
                 else
                 {
                     Console.WriteLine("! There are not enough seats at this gig to accomodate the number of seats wanted. No seats booked");
                 }
             }
-            catch (Exception e)
+            catch (ArgumentNullException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -129,14 +118,13 @@ namespace ConcertDemo
 
         }
 
-        public string ValidGigIDs()
+        public List<int> ValidGigIDs()
         {
-            string output = "( ";
-            foreach ( Gig g in ConcertList)
+            List<int> output = new List<int>();
+            foreach (Gig g in ConcertList)
             {
-                output += g.GigID + ",";
+                output.Add(g.GigID);
             }
-            output = output.Trim(',') + " )";
             return output;
         }
 
