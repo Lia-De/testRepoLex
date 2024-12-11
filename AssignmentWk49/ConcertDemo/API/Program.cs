@@ -1,10 +1,41 @@
 using ConcertDemo;
+using Microsoft.AspNetCore.Builder;
+using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
+
+
+
+// Connected from the frontend, a html page. Connected to this API localhost:[port]
+// In order to not stop all other loading we have to use >> async << HttpRequest, and 
+// save the data using >> await << in the storing of form.
+app.MapPost("/addconcert", async (HttpRequest request) =>
+{
+    var content = await request.ReadFormAsync();
+
+    string artist = content["artist"].ToString();
+    Venues venue = (Venues)Enum.Parse(typeof(Venues), content["venue"].ToString());
+    DateTime concertDate;
+    try
+    {
+        concertDate = DateTime.Parse(content["date"].ToString());
+    }
+    catch (FormatException)
+    {
+        concertDate = DateTime.Now;
+    }
+
+    BookingAgent myBooker = new BookingAgent();
+    myBooker.BookConcert(artist, venue, concertDate);
+
+    return $"Form submitted to add {artist} playing at {venue} on {concertDate}." +
+    $" We currently have {myBooker.ConcertList.Count()} Concerts booked.";
+
+});
 
 app.MapGet("/guess/{number}", (int number) =>
 {

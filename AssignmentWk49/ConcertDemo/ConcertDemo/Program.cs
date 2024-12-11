@@ -5,6 +5,7 @@ void UseBookingAgent ()
 {
     BookingAgent jennysBokare = new BookingAgent();
 
+    /*
     jennysBokare.BookConcert("Orphei drängar", Venues.Alfvensalen, new DateTime(2024, 12, 23, 16, 0, 0));
     jennysBokare.BookConcert("Russel Howard", Venues.UKK, new DateTime(2024, 12, 24, 16, 0, 0));
     jennysBokare.BookConcert("Orphei drängar", Venues.Alfvensalen, new DateTime(2024, 12, 25, 16, 0, 0));
@@ -29,6 +30,7 @@ void UseBookingAgent ()
     {
         g.ShowInfo();
     }
+    */
 
     Console.WriteLine("\n   Welcome to Jenny's Booking Agent. We currently have < " + jennysBokare.ConcertList.Count() + " > Concerts on the books.");
     Console.WriteLine(GetUserInput.ShowMenu);

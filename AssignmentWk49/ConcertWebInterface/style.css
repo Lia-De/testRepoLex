@@ -1,0 +1,46 @@
+body {
+background-color: #011601;
+}
+
+#container {
+    background-color: hsl(151, 50%, 90%);
+    width: 800px;
+    margin: auto;
+    padding: 2rem;
+    border-radius: .3rem;
+}
+
+h1 {
+    color: #011601;
+    text-align: center;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+}
+form label {
+    padding-top: 1rem;
+    font-size: 1.2rem;    
+}
+input[type=submit] {  
+    font-size: 1.2rem;
+    margin:auto;
+    margin-top: 1.3rem;
+    width: 250px;
+    border-radius: .5rem;
+    border: 1px hsl(151, 50%, 90%) dashed;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    background-color: hsl(120, 91%, 10%);
+    color: hsl(151, 50%, 90%);
+    padding: 0.5rem 0;
+}
+#artist {
+    width: 80%;
+}
+#formArtist {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}

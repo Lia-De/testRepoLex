@@ -7,14 +7,28 @@ namespace ConcertDemo
     {
         public List<Gig> ConcertList = new List<Gig>();
         public int NumberOfGigs;
-        private static Dictionary<Venues, int> VenueCapacity = new Dictionary<Venues, int>();
+        private Dictionary<Venues, int> VenueCapacity = new Dictionary<Venues, int>();
         public BookingAgent()
         {
-            NumberOfGigs = 0;
-            VenueCapacity.Add(Venues.UKK, 1120);
+            // Initialize the venue capacities
+
             VenueCapacity.Add(Venues.Alfvensalen, 400);
             VenueCapacity.Add(Venues.UniversitetsAulan, 350);
             VenueCapacity.Add(Venues.Fyrishov, 1500);
+            VenueCapacity.Add(Venues.UKK, 1120);
+            
+            // Starting up = read in the concert in the saved file and set the NumberofGigs to the highest ID
+            List<Gig> concertList = RestoreList();
+            if (concertList != null)
+            {
+                ConcertList = concertList;
+                int highestID = 0;
+                foreach (Gig g in ConcertList)
+                {
+                    if (g.GigID > highestID) highestID = g.GigID;
+                }
+                NumberOfGigs = highestID;
+            } else { NumberOfGigs = 0; }
         }
         public void AllConcerts()
         {
@@ -28,13 +42,16 @@ namespace ConcertDemo
             ++NumberOfGigs;
             Gig newGig = new Gig(NumberOfGigs, artist, venue, VenueCapacity[venue], date);
             ConcertList.Add(newGig);
+            WritePersistantList();
             return newGig;
         }
 
         public bool DeleteConcert(int gigID)
         {
             Gig gigToCancel = FindListItem(gigID);
-            return ConcertList.Remove(gigToCancel);
+            bool result = ConcertList.Remove(gigToCancel);
+            WritePersistantList();
+            return result;
         }
         public Gig FindListItem(int gigID)
         {
@@ -53,6 +70,7 @@ namespace ConcertDemo
                 {
                     gigToBook.Bookings += seatsWanted;
                     Console.WriteLine("Success! ");
+                    WritePersistantList();
                     return gigToBook.Bookings;
                 }
                 else if (seatsWanted<=0)
@@ -80,12 +98,14 @@ namespace ConcertDemo
             if (gigToEdit.Bookings > newVenueCap) Console.WriteLine("! WARNING: Current bookings are more than the new Venue can hold. ");
             gigToEdit.Venue = venue;
             gigToEdit.Capacity = newVenueCap;
+            WritePersistantList();
             return gigToEdit;
         }
         public Gig EditConcert(int gigID, DateTime date)
         {
             Gig gigToEdit = FindListItem(gigID);
             gigToEdit.GigDate = date;
+            WritePersistantList();
             return gigToEdit;
         }
         public Gig EditConcert(int gigID, int capacity)
@@ -104,6 +124,7 @@ namespace ConcertDemo
                 gigToEdit.Capacity = capacity;
                 Console.WriteLine("    >> Capacity updated to " + capacity);
             }
+            WritePersistantList(); 
             return gigToEdit;
 
         }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new Concert to Jenny's Concert Booker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+    <header>
+        <h1>Welcome to Jenny's Concert Booker</h1>
+    </header>
+    <main id="content">
+        <form action="https://localhost:7179/addconcert" method="post">
+            <label for="artist" id="formArtist">Artist:
+                <input type="text" name="artist" id="artist">
+            </label>
+
+            <label for="venue" id="formVenue">Venue:
+                <select name="venue" id="venue">
+                    <option value="UKK">UKK</option>
+                    <option value="Fyrishov">Fyrishov</option>
+                    <option value="Alfvensalen">Alfvensalen</option>
+                    <option value="UniversitetsAulan">UniversitetsAulan</option>
+                </select>
+            </label>
+
+            <label for="date" id="formDate">Date:
+                <input type="datetime-local" name="date" id="date">
+            </label>
+            
+            <input type="submit" value="Book new concert">
+        </form>
+    </main>
+</div>
+</body>
+</html>
