@@ -59,7 +59,6 @@ public class GetUserInput
             }
             catch (FormatException)
             {
-                //Console.WriteLine(e.Message);
                 Console.Write("! You must enter a number: ");
             }
             catch (OverflowException e)
@@ -241,27 +240,42 @@ public class GetUserInput
                     break;
                 case 2:
                     // delete
-                    Console.WriteLine("\n   >> DELETE. Type in the id of the Concert to delete. ");
+                    Console.WriteLine("\n   >> DELETE. Type in the id of the Concert to delete, or 0 to exit menu. ");
                     Console.WriteLine($"   >> Valid IDs: {GetUserInput.PrintableConcertIDs(jennysBokare.ValidGigIDs())}");
                     Console.Write("   >> Concert ID: ");
                     int deleteID = GetUserInput.GetNumber();
+                    if (deleteID == 0)
+                    {
+                        Console.WriteLine(" - Exiting Delete Menu - ");
+                        break;
+                    }
                     if (jennysBokare.DeleteConcert(deleteID)) Console.WriteLine("Deleted concert with ID: " + deleteID);
                     else Console.WriteLine("! Not a valid concert to delete");
                     break;
                 case 3:
                     // Edit 
-                    Console.WriteLine("\n   >> EDIT Step 1. Type in the id of the concert to edit and press enter.");
+                    Console.WriteLine("\n   >> EDIT Step 1. Type in the id of the concert to edit and press enter, or 0 to exit menu.");
                     Console.WriteLine($"   >> Valid IDs: {GetUserInput.PrintableConcertIDs(jennysBokare.ValidGigIDs())}");
                     Console.Write("   >> Concert ID: ");
                     int editID = GetUserInput.GetNumber();
+                    if (editID == 0)
+                    {
+                        Console.WriteLine(" - Exiting Edit Menu - ");
+                        break;
+                    }
                     Gig gigToEdit;
                     try
                     {
                         gigToEdit = jennysBokare.FindListItem(editID);
                         gigToEdit.ShowInfo();
-                        Console.WriteLine("\n   >> EDIT Step 2. Choose which field to edit 1 = venue, 2 = date, 3 = capacity");
+                        Console.WriteLine("\n   >> EDIT Step 2. Choose which field to edit 1 = venue | 2 = date | 3 = capacity | 0 = Exit Edit Menu");
                         Console.Write("   >> : ");
-                        int fieldToEdit = GetUserInput.GetNumber();
+                        int fieldToEdit = GetUserInput.GetNumber(0,3);
+                        if (fieldToEdit == 0)
+                        {
+                            Console.WriteLine(" - Exiting Edit Menu - ");
+                            break;
+                        }
                         if (fieldToEdit == 1)
                         {
                             Console.WriteLine("\n   >> EDIT Step 3. Current venue is: " + gigToEdit.Venue);
@@ -311,7 +325,6 @@ public class GetUserInput
                     Console.WriteLine("\n   >> ADD new Concert. You must input Artist, Venue and Time.");
                     Console.Write("   >> Artist: ");
                     string inputArtist = "";
-                    // inputArtist = Console.ReadLine();
                     inputArtist = GetUserInput.GetArtistName();
 
                     Console.WriteLine("  Venue options are: ");
