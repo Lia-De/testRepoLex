@@ -173,10 +173,10 @@ public class GetUserInput
         year = GetNumber(4, DateTime.Now.Year,(DateTime.Now.Year+10));
         
         Console.Write("   >> Month (2 digits): ");
-        month = GetNumber(2, 0, 12);
+        month = GetNumber(2, 1, 12);
         
         Console.Write("   >> Day (2 digits): ");
-        day = GetNumber(2, 0, 31);
+        day = GetNumber(2, 1, 31);
         
         Console.Write("   >> Hour (2 digits): ");
         hour = GetNumber(2, 0, 23);
