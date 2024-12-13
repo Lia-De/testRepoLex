@@ -8,8 +8,6 @@ using System.Text.Json;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-
-
 // Connected from the frontend, a html page. Connected to this API localhost:[port]
 // In order to not stop all other loading we have to use >> async << HttpRequest, and 
 // save the data using >> await << in the storing of form.
@@ -31,10 +29,15 @@ app.MapPost("/addconcert", async (HttpRequest request) =>
 
     BookingAgent myBooker = new BookingAgent();
     myBooker.BookConcert(artist, venue, concertDate);
+    string allConcerts = "\n";
+    foreach (Gig gig in myBooker.ConcertList)
+    {
+        allConcerts += gig.ToString() + "\n";
+    }
 
     return $"Form submitted to add {artist} playing at {venue} on {concertDate}." +
-    $" We currently have {myBooker.ConcertList.Count()} Concerts booked.";
-
+    $" We currently have {myBooker.ConcertList.Count()} Concerts booked.\n" +
+    $"{allConcerts}";
 });
 
 app.MapGet("/guess/{number}", (int number) =>

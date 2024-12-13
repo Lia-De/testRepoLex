@@ -11,7 +11,6 @@ public class BookingAgent
     public BookingAgent()
     {
         // Initialize the venue capacities
-
         VenueCapacity.Add(Venues.Alfvensalen, 400);
         VenueCapacity.Add(Venues.UniversitetsAulan, 350);
         VenueCapacity.Add(Venues.Fyrishov, 1500);
@@ -75,7 +74,6 @@ public class BookingAgent
         {
             Console.WriteLine(e.Message);
         }
-
         return -1;
     }
 
@@ -115,7 +113,6 @@ public class BookingAgent
         }
         WritePersistantList(); 
         return gigToEdit;
-
     }
 
     public List<int> ValidGigIDs()
@@ -163,9 +160,6 @@ public class BookingAgent
                 restoredList.Add(restoredGig);
             }
         }
-
         return restoredList;
     }
-
-
 }

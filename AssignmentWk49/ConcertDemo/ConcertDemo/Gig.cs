@@ -35,6 +35,9 @@ public class Gig
     {
         Console.WriteLine("Gig " + GigID + ": '" + Artist + "' playing at " + Venue + ". On: " + GigDate);
         Console.WriteLine("    Total seats: " + Capacity + " Currently booked: " + Bookings);
-
+    }
+    public override string ToString()
+    {
+        return $"{GigID}: {Artist} playing {Venue} on {GigDate} Booked {Bookings}/{Capacity}";
     }
 }
