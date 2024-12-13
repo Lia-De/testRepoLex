@@ -58,7 +58,7 @@ app.MapGet("/collection", () =>
     
     foreach (Gig g in testGigs)
     {
-        jsonResponse +="\n"+ g.Artist + " @ " + g.Venue;
+        jsonResponse += "\n" + g.ToString();
     }
     return jsonResponse;
 });
