@@ -5,12 +5,24 @@
 -- # 1: Get the cities with a name starting with ping sorted by their population with the least populated cities first
 -- #
 select Name, Population from city WHERE NAME LIKE 'Ping%' ORDER BY Population;
-7 rows
+Pingyi	89373
+Pingliang	99265
+Pingdu	150123
+Pingchen	188344
+Pingtung	214727
+Pingdingshan	410775
+Pingxiang	425579
 -- #
 -- # 2: Get the cities with a name starting with ran sorted by their population with the most populated cities first
 -- #
 select Name, Population from city WHERE NAME LIKE 'ran%' ORDER BY Population DESC;
-7 rows
+Rangoon (Yangon)	3361700
+Ranchi	599306
+Randburg	341288
+Rancagua	212977
+Rangpur	191398
+Rancho Cucamonga	127743
+Randfontein	120838
 -- #
 -- # 3: Count all cities
 -- #
@@ -26,6 +38,7 @@ select AVG(Population) from city;
 -- #
 select MAX(Population) from city;
 10500000
+-- alt 
 select * from city where Population = (select MAX(Population) from city);
 1024	Mumbai (Bombay)	IND	Maharashtra	10500000
 -- #
